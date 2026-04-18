@@ -1,0 +1,39 @@
+{% extends "index.html" %}
+
+{% block title %}Matrix{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h2 class="card-title mb-4">Matrix</h2>
+        
+        <div class="table-responsive">
+            <table class="table table-hover align-middle border">
+                <thead class="table-light">
+                    <tr>
+                        <th class="sticky-col">Features: </th>
+                        {% for sdk in selected %}
+                        <th class="text-center">{{ sdk.name }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in selected %}
+                    <tr>
+                        <td class="table-light"> {{ row.name }} </td>
+                        {% for col in selected %}
+                        {% set raw = matrix.get((row.id, col.id), 0) %}
+                        {% set val = norm.get((row.id, col.id), 0) %}
+                        {% set shade = 255 - (val * 200)|int %}
+                        <td class="text-center" style="background-color: rgb(255, {{ shade }}, {{ shade }})">
+                          raw: {{ raw }}, normalized: {{ "%.3f"|format(val) }}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

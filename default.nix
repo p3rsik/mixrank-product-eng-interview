@@ -28,6 +28,9 @@ pkgs.mkShell rec {
         ruff
         python-lsp-server
         jedi-language-server
+
+        flask
+        jinja2
       ];
     })
   ]);

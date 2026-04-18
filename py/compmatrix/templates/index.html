@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Competitive matrix renderer{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .wrapper { display: flex; align-items: stretch; min-height: 100vh; }
+        #sidebar { min-width: 280px; max-width: 280px; background: #343a40; color: #fff; transition: all 0.3s; padding: 20px; }
+        .content-area { width: 100%; padding: 20px; background: #f4f7f6; }
+        .sdk-list { list-style: none; padding: 0; }
+        .sdk-item { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <nav id="sidebar">
+            <div class="sidebar-header border-bottom mb-4 pb-2">
+                <h4>Comparison Tool</h4>
+            </div>
+
+            <form action="/matrix" method="GET">
+                <h6>Select SDKs to Compare</h6>
+                <ul class="sdk-list">
+                    {% for sdk in available_sdks %}
+                    <li class="sdk-item">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="selected_sdks" 
+                                   value="{{ sdk.id }}" id="sdk_{{ sdk.id }}"
+                                   {% if sdk in selected %}checked{% endif %}>
+                            <label class="form-check-label" for="sdk_{{ sdk.id }}">
+                                {{ sdk.name }}
+                            </label>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <button type="submit" class="btn btn-primary btn-sm w-100 mt-3">Get Matrix</button>
+            </form>
+        </nav>
+
+        <div class="content-area">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
