@@ -29,8 +29,8 @@ pkgs.mkShell rec {
         python-lsp-server
         jedi-language-server
 
-        flask
-        jinja2
+        flask # web server
+        jinja2 # templating library
       ];
     })
   ]);
